@@ -1,0 +1,47 @@
+This package is available from the git repository and can be built
+with the help of git-buildpackage. The resulting package will be
+output into ../ relative to the current directory.
+To build this package, run:
+
+$ git-buildpackage
+
+
+# Branch layout
+
+*vx.y* - upstream branch
+
+*braiins-x.y.z* - our custom branch with cherry-picked changesets and
+ modifications
+
+*debian-x.y.z* - this branch contains continuous merges from the
+*braiins-x.y.z* and is the one that contains the Debian packaging
+
+*debian* - basic branch for Debian packaging, all changes to the
+packaging should be initially committed here and that continuously
+being merged to *debian-x.y.z*
+
+
+# Starting a new *debian-x.y.z* branch
+
+- start a new Debian branch:
+
+	$ git checkout -b debian-x.y.z braiins-x.y.z
+
+- modify *debian/gbp.conf* so that it refers to *debian-x.y* branch:
+
+    $ git add debian/gbp.conf
+	$ git commit -m 'Started Debian packaging for x.y.z branch'
+
+- make sure the upstream has been tagged at the branch point:
+
+    $ git tag -a upstream/x.y.z
+
+- generate new Debian changelog as follows:
+
+	$ dch --package zcash --newversion x.y.z-1 --empty --create
+	$ git-dch -s upstream/x.y.z --release
+
+- commit the changelog:
+
+    $ git add debian/changelog
+	$ printf "Changelog update\nGit-Dch: Ignore\n" | git commit --file -

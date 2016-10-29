@@ -1,0 +1,46 @@
+Source: zcash
+Section: utils
+Priority: optional
+Maintainer: Jan Čapek <jan.capek@braiins.cz>
+Build-Depends: debhelper (>= 9), 
+ autoconf, automake, bsdmainutils, build-essential,
+ git, g++-multilib, libc6-dev, libtool,
+ m4, ncurses-dev, pkg-config, python,
+ unzip, wget, zlib1g-dev,
+ ca-certificates,
+Standards-Version: 3.9.2
+Homepage: https://z.cash
+Vcs-Git: git://github.com/zcash/zcash.git
+Vcs-Browser: http://github.com/zcash/zcash
+
+Package: zcashd-node
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: zcashd
+Replaces: zcashd
+Description: P2P Zcash daemon - node variant without wallet support (no GUI)
+ Zcash is an implementation of the "Zerocash" protocol.
+ Based on Bitcoin's code, it intends to offer a far higher standard
+ of privacy and anonymity through a sophisticiated zero-knowledge
+ proving scheme which preserves confidentiality of transaction metadata.
+ This package provides the daemon, zcashd, and the CLI tool,
+ zcash-cli, to interact with the daemon.
+ .
+ This package provides zcashd, a combined daemon and CLI tool to
+ interact with the daemon.
+
+Package: zcashd-wallet
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: zcashd
+Replaces: zcashd
+Description: P2P Zcash daemon - full variant wallet support (no GUI)
+ Zcash is an implementation of the "Zerocash" protocol.
+ Based on Bitcoin's code, it intends to offer a far higher standard
+ of privacy and anonymity through a sophisticiated zero-knowledge
+ proving scheme which preserves confidentiality of transaction metadata.
+ This package provides the daemon, zcashd, and the CLI tool,
+ zcash-cli, to interact with the daemon.
+ .
+ This package provides zcashd, a combined daemon and CLI tool to
+ interact with the daemon.
