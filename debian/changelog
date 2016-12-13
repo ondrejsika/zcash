@@ -1,3 +1,144 @@
+zcash (1.0.3-1) unstable; urgency=low
+
+  [ Sean Bowe ]
+  * [0a958ae] Write R1CS output to file in GenerateParams.
+
+  [ Cameron Boehmer ]
+  * [473ed95] point "where do i begin?" readme link to 1.0 guide
+
+  [ Sean Bowe ]
+  * [2b2bc69] Properly account for joinsplit value when deciding if a transaction should be placed in a mined block.
+
+  [ Jack Grigg ]
+  * [d793f94] Track mined blocks to detect and report orphans and mining revenue
+  * [848c89c] Refresh mining status to detect setgenerate changes
+  * [eb5b582] Add network stats to metrics screen
+  * [24f1026] Show mining info once the node has finished loading
+
+  [ Simon ]
+  * [4e16a72] Closes #1746. Add rpc call z_validateaddress to validate zaddrs.
+
+  [ Sean Bowe ]
+  * [73363c3] Add checkpoint at block 2500.
+
+  [ Jack Grigg ]
+  * [cb70983] Improve locking in metrics
+
+  [ Sean Bowe ]
+  * [c4643bd] Throw more descriptive exceptions when the constraint system is violated.
+
+  [ Jack Grigg ]
+  * [548bbd9] Adjust consensus rule to accept genesis block without height in coinbase
+  * [22ee0ef] Fix previous commit
+  * [73a4391] Ensure that no tracked blocks are skipped during orphan detection
+  * [33efd81] Add build scripts and fetch-params.sh to "make install" and "make dist"
+
+  [ Kevin Gallagher ]
+  * [4bc627b] Improves usability of fetch-params.sh
+
+  [ Jack Grigg ]
+  * [3bddaf6] Use uint64_t for AtomicCounter
+
+  [ Sean Bowe ]
+  * [5267695] Test that a pure joinsplit will mine if other transactions are in the mempool.
+
+  [ Jack Grigg ]
+  * [e80490f] Fix gtest issue introduced into master
+  * [6b82011] Fix whitespace in Makefile.gtest.include
+
+  [ ITH4Coinomia ]
+  * [c6ad4f2] Update security-warnings.md
+  * [df22af0] Update init.cpp
+
+  [ Jack Grigg ]
+  * [74372ea] Initialise walletdb system in a temp dir for all gtests
+  * [d873bd1] Revert "Initialise walletdb system in a temp dir for all gtests"
+  * [b7f3640] Change execution order of gtests to avoid bug
+
+  [ Sean Bowe ]
+  * [eb2e2b7] 1.0.1 release.
+
+  [ Simon ]
+  * [5e9b555] Fixes #1762 segfault when miner is interrupted.
+
+  [ S. Matthew English ]
+  * [de9ca8e] enforcing consistency 'tor' to 'Tor'
+
+  [ Simon ]
+  * [7c46378] Fixes #1779 so that sending to multiple zaddrs no longer fails.
+
+  [ Sean Bowe ]
+  * [b55744e] Regression test for constraint system violation.
+  * [5f0a73c] Improve accuracy of constraint system violation diagnostics.
+
+  [ Simon ]
+  * [38276c6] Add GenIdentity, an identity function for MappedShuffle.
+
+  [ Jack Grigg ]
+  * [7a810ef] Add --disable-tests flag to zcutils/build.sh
+
+  [ Simon ]
+  * [3920292] Add transaction size and zaddr output limit checks to z_sendmany.
+
+  [ Sean Bowe ]
+  * [996fccf] 1.0.2 release.
+
+  [ ayleph ]
+  * [48f9c65] Correct spelling error in z_sendmany error output
+
+  [ Simon ]
+  * [9384e74] Closes #1833.  Format currency amounts in z_sendmany error message.
+
+  [ Jay Graber ]
+  * [d25e75c] Document z_sendmany error code messages in payment-api.md
+  * [59ac34e] s/Bitcoin/Zcash in JSONRPCError
+
+  [ Sean Bowe ]
+  * [d92bea9] Add tests for witness `element` and tree `last` methods. Strengthen testing by inserting a different commitment into the tree at each step.
+  * [226a6b3] Initialize after profiling messages are suppressed.
+  * [78df9f0] Process verification keys to perform online verification.
+
+  [ Jack Grigg ]
+  * [40ef121] Correctly set CNoteData::witnessHeight when decrementing witness caches
+  * [4a6a484] Copy over CNoteData::witnessHeight when updating wallet tx
+  * [ccfd8aa] Add code comments about CNoteData::witnessHeight
+  * [a4ef3aa] Clear witnessHeight and nWitnessCacheSize in ClearNoteWitnessCache
+
+  [ Simon ]
+  * [f4404d7] Closes #1680, temporary fix for rpc deadlock inherited from upstream.
+  * [ba0625f] Set default minrelaytxfee to 1000 zatoshis to match upstream.
+
+  [ Sean Bowe ]
+  * [3e2e8b5] Add test that `last` and `element` will throw exception when the tree is blank.
+
+  [ Simon ]
+  * [9ddb6ad] Mempool will accept tx with joinsplits and the default z_sendmany fee.
+
+  [ Jay Graber ]
+  * [b82084f] Change format of z_sendmany error code documentation.
+
+  [ Simon ]
+  * [de38bfb] Track the correct change witness across chained joinsplits
+  * [0afd368] Closes #1854. z_sendmany selects more utxos to avoid dust change output.
+
+  [ Jay Graber ]
+  * [3935f9d] Release-notes.py script to generate release notes and add contributors to authors.md
+
+  [ Simon ]
+  * [27c2ccb] Partial revert of bd87e8c: file release-notes-1.0.2.md to 343b0d6.
+
+  [ Sean Bowe ]
+  * [f398a94] Anchors and nullifiers should always be inherited from the parent cache.
+
+  [ Simon ]
+  * [13e9a63] Fix threading issue when initializing public params.
+  * [26fb4db] 1.0.3 Release
+
+  [ Jan Čapek ]
+  * [8bb84e1] Debian: build only with wallet enabled
+
+ -- Jan Čapek <jan.capek@braiins.cz>  Tue, 13 Dec 2016 09:44:20 +0000
+
 zcash (1.0.0-1) unstable; urgency=low
 
   * [a988ff4] Import initial branch for Debian packaging
