@@ -29,8 +29,6 @@ override_dh_auto_build:
 	cp src/zcashd $(pkg_build_dir)/zcashd-wallet
 	cp src/zcash-cli $(pkg_build_dir)/zcash-cli-wallet
 	cp zcutil/fetch-params.sh $(pkg_build_dir)/zcash-fetch-params-wallet.sh
-	 ./configure $(node_opts)
-	 $(MAKE)
 	cp src/zcashd $(pkg_build_dir)/zcashd-node
 	cp src/zcash-cli $(pkg_build_dir)/zcash-cli-node
 	cp zcutil/fetch-params.sh $(pkg_build_dir)/zcash-fetch-params-node.sh
