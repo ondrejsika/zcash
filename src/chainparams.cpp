@@ -293,7 +293,7 @@ public:
     CRegTestParams() {
         strNetworkID = "regtest";
         strCurrencyUnits = "REG";
-        consensus.fCoinbaseMustBeProtected = false;
+        consensus.fCoinbaseMustBeProtected = true;
         consensus.nSubsidySlowStartInterval = 0;
         consensus.nSubsidyHalvingInterval = 840000;
         consensus.nMajorityEnforceBlockUpgrade = 750;
