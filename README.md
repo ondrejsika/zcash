@@ -1,6 +1,15 @@
 Zcash 1.0.5
 ===========
 
+## ondrejsika/regtest
+
+This branch contains some differences between zcash/master for regtest chain
+
+- __equihash params__ - production equihash params 200, 9
+- __halving__ - standart halving after 840 000 blocks
+- __coinbase output protection__ - coinbase outputs can be sent only to zaddr as on livenet
+
+
 What is Zcash?
 --------------
 
