@@ -16,10 +16,11 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/dynamic_bitset.hpp>
 
-using namespace std;
-using namespace json_spirit;
+#include <univalue.h>
 
-static const int MAX_GETUTXOS_OUTPOINTS = 15; //allow a max of 15 outpoints to be queried at once
+using namespace std;
+
+static const size_t MAX_GETUTXOS_OUTPOINTS = 15; //allow a max of 15 outpoints to be queried at once
 
 enum RetFormat {
     RF_UNDEF,
@@ -61,9 +62,10 @@ public:
     string message;
 };
 
-extern void TxToJSON(const CTransaction& tx, const uint256 hashBlock, Object& entry);
-extern Object blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool txDetails = false);
-extern void ScriptPubKeyToJSON(const CScript& scriptPubKey, Object& out, bool fIncludeHex);
+extern void TxToJSON(const CTransaction& tx, const uint256 hashBlock, UniValue& entry);
+extern UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool txDetails = false);
+extern void ScriptPubKeyToJSON(const CScript& scriptPubKey, UniValue& out, bool fIncludeHex);
+extern UniValue blockheaderToJSON(const CBlockIndex* blockindex);
 
 static RestErr RESTERR(enum HTTPStatusCode status, string message)
 {
@@ -133,14 +135,14 @@ static bool rest_headers(AcceptedConnection* conn,
     if (!ParseHashStr(hashStr, hash))
         throw RESTERR(HTTP_BAD_REQUEST, "Invalid hash: " + hashStr);
 
-    std::vector<CBlockHeader> headers;
+    std::vector<const CBlockIndex *> headers;
     headers.reserve(count);
     {
         LOCK(cs_main);
         BlockMap::const_iterator it = mapBlockIndex.find(hash);
         const CBlockIndex *pindex = (it != mapBlockIndex.end()) ? it->second : NULL;
         while (pindex != NULL && chainActive.Contains(pindex)) {
-            headers.push_back(pindex->GetBlockHeader());
+            headers.push_back(pindex);
             if (headers.size() == (unsigned long)count)
                 break;
             pindex = chainActive.Next(pindex);
@@ -148,8 +150,8 @@ static bool rest_headers(AcceptedConnection* conn,
     }
 
     CDataStream ssHeader(SER_NETWORK, PROTOCOL_VERSION);
-    BOOST_FOREACH(const CBlockHeader &header, headers) {
-        ssHeader << header;
+    BOOST_FOREACH(const CBlockIndex *pindex, headers) {
+        ssHeader << pindex->GetBlockHeader();
     }
 
     switch (rf) {
@@ -162,6 +164,16 @@ static bool rest_headers(AcceptedConnection* conn,
     case RF_HEX: {
         string strHex = HexStr(ssHeader.begin(), ssHeader.end()) + "\n";
         conn->stream() << HTTPReply(HTTP_OK, strHex, fRun, false, "text/plain") << std::flush;
+        return true;
+    }
+
+    case RF_JSON: {
+        UniValue jsonHeaders(UniValue::VARR);
+        BOOST_FOREACH(const CBlockIndex *pindex, headers) {
+            jsonHeaders.push_back(blockheaderToJSON(pindex));
+        }
+        string strJSON = jsonHeaders.write() + "\n";
+        conn->stream() << HTTPReply(HTTP_OK, strJSON, fRun) << std::flush;
         return true;
     }
 
@@ -221,8 +233,8 @@ static bool rest_block(AcceptedConnection* conn,
     }
 
     case RF_JSON: {
-        Object objBlock = blockToJSON(block, pblockindex, showTxDetails);
-        string strJSON = write_string(Value(objBlock), false) + "\n";
+        UniValue objBlock = blockToJSON(block, pblockindex, showTxDetails);
+        string strJSON = objBlock.write() + "\n";
         conn->stream() << HTTPReply(HTTP_OK, strJSON, fRun) << std::flush;
         return true;
     }
@@ -265,10 +277,9 @@ static bool rest_chaininfo(AcceptedConnection* conn,
 
     switch (rf) {
     case RF_JSON: {
-        Array rpcParams;
-        Value chainInfoObject = getblockchaininfo(rpcParams, false);
-
-        string strJSON = write_string(chainInfoObject, false) + "\n";
+        UniValue rpcParams(UniValue::VARR);
+        UniValue chainInfoObject = getblockchaininfo(rpcParams, false);
+        string strJSON = chainInfoObject.write() + "\n";
         conn->stream() << HTTPReply(HTTP_OK, strJSON, fRun) << std::flush;
         return true;
     }
@@ -317,9 +328,9 @@ static bool rest_tx(AcceptedConnection* conn,
     }
 
     case RF_JSON: {
-        Object objTx;
+        UniValue objTx(UniValue::VOBJ);
         TxToJSON(tx, hashBlock, objTx);
-        string strJSON = write_string(Value(objTx), false) + "\n";
+        string strJSON = objTx.write() + "\n";
         conn->stream() << HTTPReply(HTTP_OK, strJSON, fRun) << std::flush;
         return true;
     }
@@ -492,7 +503,7 @@ static bool rest_getutxos(AcceptedConnection* conn,
     }
 
     case RF_JSON: {
-        Object objGetUTXOResponse;
+        UniValue objGetUTXOResponse(UniValue::VOBJ);
 
         // pack in some essentials
         // use more or less the same output as mentioned in Bip64
@@ -500,15 +511,15 @@ static bool rest_getutxos(AcceptedConnection* conn,
         objGetUTXOResponse.push_back(Pair("chaintipHash", chainActive.Tip()->GetBlockHash().GetHex()));
         objGetUTXOResponse.push_back(Pair("bitmap", bitmapStringRepresentation));
 
-        Array utxos;
+        UniValue utxos(UniValue::VARR);
         BOOST_FOREACH (const CCoin& coin, outs) {
-            Object utxo;
+            UniValue utxo(UniValue::VOBJ);
             utxo.push_back(Pair("txvers", (int32_t)coin.nTxVer));
             utxo.push_back(Pair("height", (int32_t)coin.nHeight));
             utxo.push_back(Pair("value", ValueFromAmount(coin.out.nValue)));
 
             // include the script in a json output
-            Object o;
+            UniValue o(UniValue::VOBJ);
             ScriptPubKeyToJSON(coin.out.scriptPubKey, o, true);
             utxo.push_back(Pair("scriptPubKey", o));
             utxos.push_back(utxo);
@@ -516,7 +527,7 @@ static bool rest_getutxos(AcceptedConnection* conn,
         objGetUTXOResponse.push_back(Pair("utxos", utxos));
 
         // return json string
-        string strJSON = write_string(Value(objGetUTXOResponse), false) + "\n";
+        string strJSON = objGetUTXOResponse.write() + "\n";
         conn->stream() << HTTPReply(HTTP_OK, strJSON, fRun) << std::flush;
         return true;
     }
