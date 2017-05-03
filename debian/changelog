@@ -1,3 +1,16 @@
+zcash (1.0.8-1-1) unstable; urgency=low
+
+  * [a988ff4] Import initial branch for Debian packaging
+  * [3ea7f28] Changelog update Git-Dch: Ignore
+  * [8bb84e1] Debian: build only with wallet enabled
+  * [568fe86] Changelog update Git-Dch: Ignore
+  * [a8f4094] Changelog update Git-Dch: Ignore
+  * [a129aeb] Debian: remove missing references to bash completions
+  * [37d15df] Changelog update Git-Dch: Ignore
+  * [c06b031] Changelog update
+
+ -- Jan Čapek <jan.capek@braiins.cz>  Wed, 03 May 2017 11:06:40 +0000
+
 zcash (1.0.8-1) unstable; urgency=low
 
   * [a988ff4] Import initial branch for Debian packaging
