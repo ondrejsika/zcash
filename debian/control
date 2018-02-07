@@ -1,7 +1,7 @@
 Source: zcash
 Section: utils
 Priority: optional
-Maintainer: Jan Čapek <jan.capek@braiins.cz>
+Maintainer: Jiří Navrátil <jiri@navratil.cz>
 Build-Depends: debhelper (>= 9), 
  autoconf, automake, bsdmainutils, build-essential,
  git, g++-multilib, libc6-dev, libtool,
