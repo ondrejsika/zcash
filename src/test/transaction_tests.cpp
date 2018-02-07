@@ -6,6 +6,7 @@
 #include "data/tx_valid.json.h"
 #include "test/test_bitcoin.h"
 
+#include "init.h"
 #include "clientversion.h"
 #include "consensus/validation.h"
 #include "core_io.h"
@@ -42,7 +43,6 @@ static std::map<string, unsigned int> mapFlagNames = boost::assign::map_list_of
     (string("NONE"), (unsigned int)SCRIPT_VERIFY_NONE)
     (string("P2SH"), (unsigned int)SCRIPT_VERIFY_P2SH)
     (string("STRICTENC"), (unsigned int)SCRIPT_VERIFY_STRICTENC)
-    (string("DERSIG"), (unsigned int)SCRIPT_VERIFY_DERSIG)
     (string("LOW_S"), (unsigned int)SCRIPT_VERIFY_LOW_S)
     (string("SIGPUSHONLY"), (unsigned int)SCRIPT_VERIFY_SIGPUSHONLY)
     (string("MINIMALDATA"), (unsigned int)SCRIPT_VERIFY_MINIMALDATA)
@@ -86,7 +86,7 @@ string FormatScriptFlags(unsigned int flags)
     return ret.substr(0, ret.size() - 1);
 }
 
-BOOST_FIXTURE_TEST_SUITE(transaction_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(transaction_tests, JoinSplitTestingSetup)
 
 BOOST_AUTO_TEST_CASE(tx_valid)
 {
@@ -98,6 +98,7 @@ BOOST_AUTO_TEST_CASE(tx_valid)
     //
     // verifyFlags is a comma separated list of script verification flags to apply, or "NONE"
     UniValue tests = read_json(std::string(json_tests::tx_valid, json_tests::tx_valid + sizeof(json_tests::tx_valid)));
+    std::string comment("");
 
     auto verifier = libzcash::ProofVerifier::Strict();
     ScriptError err;
@@ -108,7 +109,7 @@ BOOST_AUTO_TEST_CASE(tx_valid)
         {
             if (test.size() != 3 || !test[1].isStr() || !test[2].isStr())
             {
-                BOOST_ERROR("Bad test: " << strTest);
+                BOOST_ERROR("Bad test: " << strTest << comment);
                 continue;
             }
 
@@ -133,7 +134,7 @@ BOOST_AUTO_TEST_CASE(tx_valid)
             }
             if (!fValid)
             {
-                BOOST_ERROR("Bad test: " << strTest);
+                BOOST_ERROR("Bad test: " << strTest << comment);
                 continue;
             }
 
@@ -143,23 +144,30 @@ BOOST_AUTO_TEST_CASE(tx_valid)
             stream >> tx;
 
             CValidationState state;
-            BOOST_CHECK_MESSAGE(CheckTransaction(tx, state, verifier), strTest);
-            BOOST_CHECK(state.IsValid());
+            BOOST_CHECK_MESSAGE(CheckTransaction(tx, state, verifier), strTest + comment);
+            BOOST_CHECK_MESSAGE(state.IsValid(), comment);
 
             for (unsigned int i = 0; i < tx.vin.size(); i++)
             {
                 if (!mapprevOutScriptPubKeys.count(tx.vin[i].prevout))
                 {
-                    BOOST_ERROR("Bad test: " << strTest);
+                    BOOST_ERROR("Bad test: " << strTest << comment);
                     break;
                 }
 
                 unsigned int verify_flags = ParseScriptFlags(test[2].get_str());
                 BOOST_CHECK_MESSAGE(VerifyScript(tx.vin[i].scriptSig, mapprevOutScriptPubKeys[tx.vin[i].prevout],
                                                  verify_flags, TransactionSignatureChecker(&tx, i), &err),
-                                    strTest);
-                BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err));
+                                    strTest + comment);
+                BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err) + comment);
             }
+
+            comment = "";
+        }
+        else if (test.size() == 1)
+        {
+            comment += "\n# ";
+            comment += test[0].write();
         }
     }
 }
@@ -174,6 +182,7 @@ BOOST_AUTO_TEST_CASE(tx_invalid)
     //
     // verifyFlags is a comma separated list of script verification flags to apply, or "NONE"
     UniValue tests = read_json(std::string(json_tests::tx_invalid, json_tests::tx_invalid + sizeof(json_tests::tx_invalid)));
+    std::string comment("");
 
     auto verifier = libzcash::ProofVerifier::Strict();
     ScriptError err;
@@ -184,7 +193,7 @@ BOOST_AUTO_TEST_CASE(tx_invalid)
         {
             if (test.size() != 3 || !test[1].isStr() || !test[2].isStr())
             {
-                BOOST_ERROR("Bad test: " << strTest);
+                BOOST_ERROR("Bad test: " << strTest << comment);
                 continue;
             }
 
@@ -209,7 +218,7 @@ BOOST_AUTO_TEST_CASE(tx_invalid)
             }
             if (!fValid)
             {
-                BOOST_ERROR("Bad test: " << strTest);
+                BOOST_ERROR("Bad test: " << strTest << comment);
                 continue;
             }
 
@@ -225,7 +234,7 @@ BOOST_AUTO_TEST_CASE(tx_invalid)
             {
                 if (!mapprevOutScriptPubKeys.count(tx.vin[i].prevout))
                 {
-                    BOOST_ERROR("Bad test: " << strTest);
+                    BOOST_ERROR("Bad test: " << strTest << comment);
                     break;
                 }
 
@@ -233,8 +242,15 @@ BOOST_AUTO_TEST_CASE(tx_invalid)
                 fValid = VerifyScript(tx.vin[i].scriptSig, mapprevOutScriptPubKeys[tx.vin[i].prevout],
                                       verify_flags, TransactionSignatureChecker(&tx, i), &err);
             }
-            BOOST_CHECK_MESSAGE(!fValid, strTest);
-            BOOST_CHECK_MESSAGE(err != SCRIPT_ERR_OK, ScriptErrorString(err));
+            BOOST_CHECK_MESSAGE(!fValid, strTest + comment);
+            BOOST_CHECK_MESSAGE(err != SCRIPT_ERR_OK, ScriptErrorString(err) + comment);
+
+            comment = "";
+        }
+        else if (test.size() == 1)
+        {
+            comment += "\n# ";
+            comment += test[0].write();
         }
     }
 }
@@ -311,9 +327,6 @@ BOOST_AUTO_TEST_CASE(test_basic_joinsplit_verification)
     // Also, it's generally libzcash's job to ensure the
     // integrity of the scheme through its own tests.
 
-    // construct the r1cs keypair
-    auto p = ZCJoinSplit::Generate();
-
     // construct a merkle tree
     ZCIncrementalMerkleTree merkleTree;
 
@@ -347,8 +360,8 @@ BOOST_AUTO_TEST_CASE(test_basic_joinsplit_verification)
     auto verifier = libzcash::ProofVerifier::Strict();
 
     {
-        JSDescription jsdesc(*p, pubKeyHash, rt, inputs, outputs, 0, 0);
-        BOOST_CHECK(jsdesc.Verify(*p, verifier, pubKeyHash));
+        JSDescription jsdesc(*pzcashParams, pubKeyHash, rt, inputs, outputs, 0, 0);
+        BOOST_CHECK(jsdesc.Verify(*pzcashParams, verifier, pubKeyHash));
 
         CDataStream ss(SER_DISK, CLIENT_VERSION);
         ss << jsdesc;
@@ -357,20 +370,20 @@ BOOST_AUTO_TEST_CASE(test_basic_joinsplit_verification)
         ss >> jsdesc_deserialized;
 
         BOOST_CHECK(jsdesc_deserialized == jsdesc);
-        BOOST_CHECK(jsdesc_deserialized.Verify(*p, verifier, pubKeyHash));
+        BOOST_CHECK(jsdesc_deserialized.Verify(*pzcashParams, verifier, pubKeyHash));
     }
 
     {
         // Ensure that the balance equation is working.
-        BOOST_CHECK_THROW(JSDescription(*p, pubKeyHash, rt, inputs, outputs, 10, 0), std::invalid_argument);
-        BOOST_CHECK_THROW(JSDescription(*p, pubKeyHash, rt, inputs, outputs, 0, 10), std::invalid_argument);
+        BOOST_CHECK_THROW(JSDescription(*pzcashParams, pubKeyHash, rt, inputs, outputs, 10, 0), std::invalid_argument);
+        BOOST_CHECK_THROW(JSDescription(*pzcashParams, pubKeyHash, rt, inputs, outputs, 0, 10), std::invalid_argument);
     }
 
     {
         // Ensure that it won't verify if the root is changed.
-        auto test = JSDescription(*p, pubKeyHash, rt, inputs, outputs, 0, 0);
+        auto test = JSDescription(*pzcashParams, pubKeyHash, rt, inputs, outputs, 0, 0);
         test.anchor = GetRandHash();
-        BOOST_CHECK(!test.Verify(*p, verifier, pubKeyHash));
+        BOOST_CHECK(!test.Verify(*pzcashParams, verifier, pubKeyHash));
     }
 }
 

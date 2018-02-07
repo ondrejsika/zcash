@@ -65,6 +65,9 @@ void static BatchWriteHashBestAnchor(CLevelDBBatch &batch, const uint256 &hash) 
     batch.Write(DB_BEST_ANCHOR, hash);
 }
 
+CCoinsViewDB::CCoinsViewDB(std::string dbName, size_t nCacheSize, bool fMemory, bool fWipe) : db(GetDataDir() / dbName, nCacheSize, fMemory, fWipe) {
+}
+
 CCoinsViewDB::CCoinsViewDB(size_t nCacheSize, bool fMemory, bool fWipe) : db(GetDataDir() / "chainstate", nCacheSize, fMemory, fWipe) {
 }
 
@@ -307,6 +310,7 @@ bool CBlockTreeDB::LoadBlockIndexGuts()
                 pindexNew->nSolution      = diskindex.nSolution;
                 pindexNew->nStatus        = diskindex.nStatus;
                 pindexNew->nTx            = diskindex.nTx;
+                pindexNew->nSproutValue   = diskindex.nSproutValue;
 
                 if (!CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits, Params().GetConsensus()))
                     return error("LoadBlockIndex(): CheckProofOfWork failed: %s", pindexNew->ToString());

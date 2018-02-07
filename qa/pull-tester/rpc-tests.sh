@@ -11,9 +11,11 @@ export BITCOIND=${REAL_BITCOIND}
 #Run the tests
 
 testScripts=(
+    'paymentdisclosure.py'
     'prioritisetransaction.py'
     'wallet_treestate.py'
     'wallet_protectcoinbase.py'
+    'wallet_shieldcoinbase.py'
     'wallet.py'
     'wallet_nullifiers.py'
     'wallet_1941.py'
@@ -26,6 +28,7 @@ testScripts=(
     'rest.py'
     'mempool_spendcoinbase.py'
     'mempool_coinbase_spends.py'
+    'mempool_tx_input_limit.py'
     'httpbasics.py'
     'zapwallettxes.py'
     'proxy_test.py'
@@ -33,17 +36,19 @@ testScripts=(
     'fundrawtransaction.py'
     'signrawtransactions.py'
     'walletbackup.py'
+    'key_import_export.py'
     'nodehandling.py'
     'reindex.py'
     'decodescript.py'
     'disablewallet.py'
     'zcjoinsplit.py'
     'zcjoinsplitdoublespend.py'
+    'zkey_import_export.py'
     'getblocktemplate.py'
+    'bip65-cltv-p2p.py'
+    'bipdersig-p2p.py'
 );
 testScriptsExt=(
-    'bipdersig-p2p.py'
-    'bipdersig.py'
     'getblocktemplate_longpoll.py'
     'getblocktemplate_proposals.py'
     'pruning.py'
@@ -65,6 +70,10 @@ if [ "x$ENABLE_ZMQ" = "x1" ]; then
   testScripts+=('zmq_test.py')
 fi
 
+if [ "x$ENABLE_PROTON" = "x1" ]; then
+  testScripts+=('proton_test.py')
+fi
+
 extArg="-extended"
 passOn=${@#$extArg}
 
@@ -78,7 +87,7 @@ function runTestScript
 
     echo -e "=== Running testscript ${testName} ==="
 
-    if eval "$@" | sed 's/^/  /'
+    if eval "$@"
     then
         successCount=$(expr $successCount + 1)
         echo "--- Success: ${testName} ---"
