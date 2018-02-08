@@ -8,6 +8,7 @@ Build-Depends: debhelper (>= 9),
  m4, ncurses-dev, pkg-config, python,
  unzip, wget, zlib1g-dev,
  ca-certificates,
+ curl, cmake
 Standards-Version: 3.9.2
 Homepage: https://z.cash
 Vcs-Git: git://github.com/zcash/zcash.git
