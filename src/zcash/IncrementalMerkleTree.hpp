@@ -1,5 +1,5 @@
-#ifndef ZCINCREMENTALMERKLETREE_H_
-#define ZCINCREMENTALMERKLETREE_H_
+#ifndef ZC_INCREMENTALMERKLETREE_H_
+#define ZC_INCREMENTALMERKLETREE_H_
 
 #include <deque>
 #include <boost/optional.hpp>
@@ -9,6 +9,7 @@
 #include "serialize.h"
 
 #include "Zcash.h"
+#include "zcash/util.h"
 
 namespace libzcash {
 
@@ -21,8 +22,29 @@ public:
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
-        READWRITE(authentication_path);
-        READWRITE(index);
+        std::vector<std::vector<unsigned char>> pathBytes;
+        uint64_t indexInt;
+        if (ser_action.ForRead()) {
+            READWRITE(pathBytes);
+            READWRITE(indexInt);
+            MerklePath &us = *(const_cast<MerklePath*>(this));
+            for (size_t i = 0; i < pathBytes.size(); i++) {
+                us.authentication_path.push_back(convertBytesVectorToVector(pathBytes[i]));
+                us.index.push_back((indexInt >> ((pathBytes.size() - 1) - i)) & 1);
+            }
+        } else {
+            assert(authentication_path.size() == index.size());
+            pathBytes.resize(authentication_path.size());
+            for (size_t i = 0; i < authentication_path.size(); i++) {
+                pathBytes[i].resize((authentication_path[i].size()+7)/8);
+                for (unsigned int p = 0; p < authentication_path[i].size(); p++) {
+                    pathBytes[i][p / 8] |= authentication_path[i][p] << (7-(p % 8));
+                }
+            }
+            indexInt = convertVectorToInt(index);
+            READWRITE(pathBytes);
+            READWRITE(indexInt);
+        }
     }
 
     MerklePath() { }
@@ -194,6 +216,9 @@ public:
     static SHA256Compress combine(const SHA256Compress& a, const SHA256Compress& b);
 };
 
+template<size_t Depth, typename Hash>
+EmptyMerkleRoots<Depth, Hash> IncrementalMerkleTree<Depth, Hash>::emptyroots;
+
 } // end namespace `libzcash`
 
 typedef libzcash::IncrementalMerkleTree<INCREMENTAL_MERKLE_TREE_DEPTH, libzcash::SHA256Compress> ZCIncrementalMerkleTree;
@@ -202,5 +227,4 @@ typedef libzcash::IncrementalMerkleTree<INCREMENTAL_MERKLE_TREE_DEPTH_TESTING, l
 typedef libzcash::IncrementalWitness<INCREMENTAL_MERKLE_TREE_DEPTH, libzcash::SHA256Compress> ZCIncrementalWitness;
 typedef libzcash::IncrementalWitness<INCREMENTAL_MERKLE_TREE_DEPTH_TESTING, libzcash::SHA256Compress> ZCTestingIncrementalWitness;
 
-#endif /* ZCINCREMENTALMERKLETREE_H_ */
-
+#endif /* ZC_INCREMENTALMERKLETREE_H_ */

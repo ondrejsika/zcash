@@ -19,10 +19,10 @@
 #include "zcash/IncrementalMerkleTree.hpp"
 #include "zcash/util.h"
 
-#include "libsnark/common/default_types/r1cs_ppzksnark_pp.hpp"
-#include "libsnark/zk_proof_systems/ppzksnark/r1cs_ppzksnark/r1cs_ppzksnark.hpp"
-#include "libsnark/gadgetlib1/gadgets/hashes/sha256/sha256_gadget.hpp"
-#include "libsnark/gadgetlib1/gadgets/merkle_tree/merkle_tree_check_read_gadget.hpp"
+#include <libsnark/common/default_types/r1cs_ppzksnark_pp.hpp>
+#include <libsnark/zk_proof_systems/ppzksnark/r1cs_ppzksnark/r1cs_ppzksnark.hpp>
+#include <libsnark/gadgetlib1/gadgets/hashes/sha256/sha256_gadget.hpp>
+#include <libsnark/gadgetlib1/gadgets/merkle_tree/merkle_tree_check_read_gadget.hpp>
 
 #include <boost/foreach.hpp>
 
@@ -38,16 +38,6 @@ void expect_deser_same(const ZCTestingIncrementalWitness& expected)
     // deserialized because it can only be constructed by
     // IncrementalMerkleTree, and it does not yet have a
     // canonical serialized representation.
-}
-
-template<>
-void expect_deser_same(const libzcash::MerklePath& expected)
-{
-    // This deserialization check is pointless for MerklePath,
-    // since we only serialize it to check it against test
-    // vectors. See `expect_test_vector` for that. Also,
-    // it doesn't seem that vector<bool> can be properly
-    // deserialized by Bitcoin's serialization code.
 }
 
 template<typename A, typename B, typename C>

@@ -1,4 +1,4 @@
-Zcash 1.0.9
+Zcash 1.1.0
 =============
 
 ## ondrejsika/regtest
@@ -27,10 +27,10 @@ blockchain has reached a significant size.
 Security Warnings
 -----------------
 
-See important security warnings in
-[doc/security-warnings.md](doc/security-warnings.md).
+See important security warnings on the
+[Security Information page](https://z.cash/support/security/).
 
-**Zcash is unfinished and highly experimental.** Use at your own risk.
+**Zcash is experimental and a work-in-progress.** Use at your own risk.
 
 Deprecation Policy
 ------------------
