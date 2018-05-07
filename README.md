@@ -1,6 +1,17 @@
 Zcash 1.1.0
 =============
 
+## regtest (branch)
+
+This branch contains some differences between zcash/master for regtest chain
+
+- __equihash params__ - production equihash params 200, 9
+- __halving__ - standart halving after 840 000 blocks
+- __coinbase output protection__ - coinbase outputs can be sent only to zaddr as on livenet
+- __initial block download__ - disable this check to allow call getblocktemplate without the generated first block
+- __is connected__ - allow to run regtest in single node network
+
+
 What is Zcash?
 --------------
 
