@@ -1,0 +1,863 @@
+zcash (1.1.0-1) unstable; urgency=medium
+
+  [ Jan Čapek ]
+  * [a988ff4] Import initial branch for Debian packaging
+  * [3ea7f28] Changelog update Git-Dch: Ignore
+  * [8bb84e1] Debian: build only with wallet enabled
+  * [568fe86] Changelog update Git-Dch: Ignore
+  * [a8f4094] Changelog update Git-Dch: Ignore
+  * [a129aeb] Debian: remove missing references to bash completions
+  * [37d15df] Changelog update Git-Dch: Ignore
+  * [c06b031] Changelog update
+  * [79a765e] Changelog update
+  * [aef87d7] adjust Maintainer
+  * [4175c65] add curl and cmake to Build-Depends in debian/control
+  * [aeb364a] add changelog
+
+  [ Jack Grigg ]
+  * [31072c8] Scope the ECDSA constant sizes to CPubKey / CKey classes
+
+  [ syd ]
+  * [3edb61c] Remove OSX and Windows files from Makefile + share directory.
+  * [3aca783] Fix libsnark dependency build.
+
+  [ Marius Kjærstad ]
+  * [c9e741b] Changed http:// to https:// on some links
+
+  [ Jack Grigg ]
+  * [3734336] Enable Bash completion for -exportdir
+  * [cbac8cc] Check chainValueZat when checking value pool monitoring
+
+  [ Simon ]
+  * [71fe03c] Fixes #2793. Backport commit f33afd3 to increase dbcache default.
+  * [32564e1] Add documentation about dbcache.
+  * [5af095f] Add note about dbcache to 1.0.15 release notes.
+  * [6b5e4b6] Remove redundant service flag NODE_GETUTXO meant for Bitcoin XT.
+
+  [ Jack Grigg ]
+  * [b7d0270] zkey_import_export: Synchronize mempools before mining
+
+  [ Mark Friedenbach ]
+  * [6f553f6] Explicitly set tx.nVersion for the genesis block and mining tests
+
+  [ Jorge Timón ]
+  * [9b84226] Chainparams: Introduce CreateGenesisBlock() static function
+  * [695f3e5] Chainparams: CTestNetParams and CRegTestParams extend directly from CChainParams
+
+  [ Daniel Kraft ]
+  * [7c166d2] Clean up chainparams some more.
+
+  [ Cory Fields ]
+  * [9137fdb] chainparams: move CCheckpointData into chainparams.h
+  * [d9860d8] chainparams: don't use std namespace
+
+  [ Jack Grigg ]
+  * [3442e8a] Add missing namespace for boost::get
+  * [31a49d5] Add viewing key prefix to regtest parameters
+
+  [ Pavel Vasin ]
+  * [0350f15] remove unused NOBLKS_VERSION_{START,END} constants
+
+  [ Jay Graber ]
+  * [6b8f55b] Add getdeprecationinfo rpc call to return current version and deprecation block height.
+  * [07f5962] Make applicable only on mainnet
+
+  [ Jack Grigg ]
+  * [9aebf32] Network upgrade activation mechanism
+  * [c3457db] Allow changing network upgrade parameters on regtest
+  * [a5da0e5] Test network upgrade logic
+
+  [ Pieter Wuille ]
+  * [9047f22] Add rewind logic to deal with post-fork software updates
+
+  [ Jack Grigg ]
+  * [7ed81e7] Adjust rewind logic to use the network upgrade mechanism
+  * [285d38e] Add Overwinter to upgrade list
+  * [f3ae95d] Add method for fetching the next activation height after a given block height
+  * [7581cc6] Use a boost::optional for nCachedBranchId
+  * [b9c32d6] Change UI/log status message for block rewinding
+  * [30b7b3c] Update quote from ZIP 200
+  * [7dd930c] Use JoinSplitTestingSetup for Boost sighash tests
+
+  [ Simon ]
+  * [1c6c36b] Implementation of Overwinter transaction format ZIP 202.
+
+  [ Jack Grigg ]
+  * [a9cabac] Update SignatureHash tests for transaction format changes
+
+  [ Simon ]
+  * [d10c345] Add test to check malformed v1 transaction against Overwinter tx parser
+
+  [ Ashley Holman ]
+  * [ff20c36] TxMemPool: Change mapTx to a boost::multi_index_container
+
+  [ Pieter Wuille ]
+  * [af5d261] Support -checkmempool=N, which runs checks on average once every N transactions
+
+  [ Alex Morcos ]
+  * [350d73f] Implement helper class for CTxMemPoolEntry constructor
+
+  [ Matt Corallo ]
+  * [0000a9f] Add failing test checking timelocked-txn removal during reorg
+  * [813dfc2] Fix removal of time-locked transactions during reorg
+  * [395e18e] Fix comment in removeForReorg
+  * [60268ad] Make indentation in ActivateBestChainStep readable
+  * [867ec3f] removeForReorg calls once-per-disconnect-> once-per-reorg
+
+  [ Suhas Daftuar ]
+  * [6bce7c7] Track coinbase spends in CTxMemPoolEntry
+  * [abbd82f] Don't call removeForReorg if DisconnectTip fails
+  * [217f09f] Fix removeForReorg to use MedianTimePast
+
+  [ Jack Grigg ]
+  * [518c294] Remove mempool transactions which commit to an unmineable branch ID
+
+  [ Pieter Wuille ]
+  * [e5b0166] Report non-mandatory script failures correctly
+
+  [ 21E14 ]
+  * [08a3fd1] Remove obsolete reference to CValidationState from UpdateCoins.
+
+  [ Jonas Nick ]
+  * [c450918] Reduce unnecessary hashing in signrawtransaction
+
+  [ Pieter Wuille ]
+  * [0598b16] Refactor script validation to observe amounts
+  * [912b532] BIP143: Verification logic
+  * [38814e6] BIP143: Signing logic
+
+  [ Jack Grigg ]
+  * [5169ed6] Remove P2WPKH and P2WSH from signing logic
+
+  [ Jorge Timón ]
+  * [59704a3] Mempool: Use Consensus::CheckTxInputs direclty over main::CheckInputs
+
+  [ Pieter Wuille ]
+  * [745e9fc] Precompute sighashes
+
+  [ Nicolas DORIER ]
+  * [3fae4df] Unit test for sighash caching
+
+  [ Pieter Wuille ]
+  * [18d1036] Rename to PrecomputedTransactionData
+
+  [ Jack Grigg ]
+  * [a257200] Add consensus branch ID parameter to SignatureHash, remove SigVersion parameter
+  * [c558673] Cleanup: Wrap function arguments
+
+  [ Ariel ]
+  * [8b68cb6] add blake2b writer
+  * [a809c56] update SignatureHash according to Overwinter spec
+
+  [ Jack Grigg ]
+  * [b3ac2f3] Regenerate SignatureHash tests
+  * [669d67c] Make number of inputs configurable in validatelargetx test
+  * [b3b5a93] Use v3 transactions with caching for validatelargetx benchmark
+  * [6808add] Implement roll-back limit for reorganisation
+  * [cd57fda] Add rollback limit to block index rewinding
+
+  [ jc ]
+  * [88cdb00] read hashReserved from disk block index
+
+  [ Jack Grigg ]
+  * [d2b9e5a] Check Equihash solution when loading block index
+
+  [ Maxwell Gubler ]
+  * [eeb7f71] Fix syntax examples for z_importwallet and export
+
+  [ Jay Graber ]
+  * [16dc046] Add upgrades field to RPC call getblockchaininfo
+
+  [ Jack Grigg ]
+  * [357e726] Add branch IDs for current and next block to getblockchaininfo
+  * [ba0d524] Check upgrade status in wallet_overwintertx RPC test
+  * [2abebdf] Document that consensus.chaintip != consensus.nextblock just before an upgrade
+
+  [ Simon ]
+  * [564de79] Closes #2964. z_sendmany once again makes v1 tx for taddr to taddr.
+  * [1ce6827] Closes #2954 and #2959.  Fixes Overwinter issues in sighash_tests.
+
+  [ Jack Grigg ]
+  * [a6d0df9] Regenerate sighash tests
+  * [4d4a796] Extend CWallet::GetFilteredNotes to enable filtering on a set of addresses
+  * [711e8e6] Implement z_mergetoaddress for combining UTXOs and notes
+  * [ba2dbaf] Gate z_mergetoaddress as an experimental feature
+  * [d2055ef] Add z_mergetoaddress to release notes
+  * [5a1fe49] wallet_mergetoaddress: Add additional syncs to prevent race conditions
+
+  [ Simon ]
+  * [a73191c] Add field nProtocolVersion to struct NetworkUpgrade.
+  * [65b3fe4] Overwinter peer management and network handshaking.
+  * [c3087a2] Add python qa test overwinter_peer_management.
+
+  [ Jay Graber ]
+  * [d78e76e] Implement transaction expiry for Overwinter
+  * [cf8f5e4] Add -txexpirydelta cli option
+  * [10db024] Add mempool_tx_expiry.py test
+  * [65f89d8] Add expiry to z_mergetoaddress
+  * [3360fba] Change rpc_tests to 21
+
+  [ Jack Grigg ]
+  * [9125785] make-release.py: Versioning changes for 1.0.15-rc1.
+  * [49c88e2] make-release.py: Updated manpages for 1.0.15-rc1.
+  * [6a6e9b4] make-release.py: Updated release notes and changelog for 1.0.15-rc1.
+  * [3b7d670] Use block hash comparison for consistency check when loading block index
+  * [c181f14] Overwinter release notes and testnet activation height
+  * [17a54ad] make-release.py: Versioning changes for 1.0.15.
+  * [c7c0b2a] make-release.py: Updated manpages for 1.0.15.
+  * [f4416bc] make-release.py: Updated release notes and changelog for 1.0.15.
+
+  [ Daira Hopwood ]
+  * [abe7769] Squashed commit of the following:
+
+  [ Jason Davies ]
+  * [f218f05] Fix typo in comment: should link to issue #1359.
+
+  [ rofl0r ]
+  * [290482a] fix build error due to usage of obsolete boost_system-mt
+  * [d476b33] remove -mt suffix from boost libraries built by depends
+
+  [ Jonathan "Duke" Leto ]
+  * [b6a4006] Fix references to Bitcoin in RPC tests readme
+  * [92d4773] This library seems to not be used at all and all comments mentioning it are ghosts
+  * [21b3708] Update awkward wording about blocks as per @daira
+  * [fefcd08] Regtest mining does have a founders reward, a single address t2FwcEhFdNXuFMv1tcYwaBJtYVtMj8b1uTg
+  * [b053aa3] Fix outdated comment about starting balance of nodes
+
+  [ Jack Grigg ]
+  * [cc2767b] Add environment variable for setting ./configure flags in zcutil/build.sh
+  * [f3c881f] Add configure flags for enabling ASan/UBSan and TSan
+
+  [ Simon ]
+  * [6005acd] Code clean up. Remove use of X macro.
+
+  [ Daira Hopwood ]
+  * [57b0482] pyflakes cleanups to RPC tests after Overwinter PRs.
+
+  [ kozyilmaz ]
+  * [c9a1a1f] Fix test/gtest bugs caught by latest macOS clang
+
+  [ Brad Miller ]
+  * [854b1a5] Clean up
+
+  [ Simon ]
+  * [9c129c8] Remove local function wait_and_assert_operationid_status which is now defined in the test framework for shared usage.
+  * [38793a4] Enable mempool logging in tx expiry QA test.
+  * [0c7b553] Closes #3084. Log txid when removing expired txs from mempool.
+  * [daa1817] Add qa test for cache invalidation bug found in v1.0.0 to v1.0.3.
+
+  [ Jack Grigg ]
+  * [6decaf7] Split declaration and definition of SPROUT_BRANCH_ID constant
+  * [9bbf62c] Add link to Overwinter info page
+  * [75075c6] cleanup: Ensure code is pyflakes-clean for CI
+
+  [ Simon ]
+  * [8bd9be1] Update boost to 1.66.0
+
+  [ Jack Grigg ]
+  * [c4dfb4f] Revert "remove -mt suffix from boost libraries built by depends"
+  * [5a1a8a3] Use correct Boost::System linker flag for libzcash
+  * [fba32b5] depends: Remove -mt suffix from Boost libraries
+  * [ee30c65] snark: Remove -mt suffix from Boost library
+
+  [ Simon ]
+  * [7c5a9b2] Closes #3110.  Ensure user can see error message about absurdly high fees.
+  * [0b99255] Part of #2966, extending Sprout tests to other epochs.
+
+  [ Charlie O'Keefe ]
+  * [406443d] Add filename and sha256 hash for windows rust package
+
+  [ Jack Grigg ]
+  * [d116c30] depends: Explicitly download and vendor Rust dependencies
+
+  [ Simon ]
+  * [58c68f9] Update boost package URL to match official download url on boost.org
+  * [4d089f5] Closes #2910. Add z_listunspent RPC call.
+
+  [ Jack Grigg ]
+  * [f68c708] test: Move wait_and_assert_operationid_status debug output before asserts
+  * [b29e6a7] Ignore -mempooltxinputlimit once Overwinter activates
+
+  [ Simon ]
+  * [0c7f67c] Upgrade OpenSSL to 1.1.0h
+
+  [ Jack Grigg ]
+  * [72f9e56] Make Rust compilation mandatory
+  * [3fef5a6] Test calling z_mergetoaddress to merge notes while a note merge is ongoing
+
+  [ Brad Miller ]
+  * [50f755b] Implement note locking for z_mergetoaddress
+
+  [ Jack Grigg ]
+  * [ac129c3] depends: Fix regex bugs in cargo-checksum.sh
+
+  [ Jonathan "Duke" Leto ]
+  * [acb6c3e] Return JoinSplit and JoinSplitOutput indexes in z_listreceivedbyaddress
+  * [0652567] Add tests for new JoinSplit keys returned by z_listreceivedbyaddress
+
+  [ Jack Grigg ]
+  * [b621d86] Add RPC test of RewindBlockIndex
+  * [a46a786] When rewinding, remove insufficiently-validated blocks
+  * [fede1cb] Notify users about auto-senescence via -alertnotify
+  * [7d1c544] Adjust deprecation message to work in both UI and -alertnotify
+  * [c1116e6] Fix z_importviewingkey startHeight parameter
+  * [f85ecc1] Don't require RELRO and BIND_NOW for Darwin
+  * [271b729] Only set multicore flags if OpenMP is available
+  * [2fd0649] Optimise serialization of MerklePath, avoiding ambiguity of std::vector<bool>
+  * [c8968b7] Use uint64_t instead of size_t for serialized indices into tx.vjoinsplit
+  * [c2efab1] Move explicit instantiation of IncrementalMerkleTree::emptyroots into header
+  * [6001a00] libsnark: Don't set -static on Darwin
+  * [62ffd57] Set PLATFORM flag when compiling libsnark
+  * [dc14410] Add base case to CurrentEpoch()
+  * [b11637a] Cast ZCIncrementalMerkleTree::size() to uint64_t before passing to UniValue
+  * [29f4bbe] rpcwallet.cpp: Cast size_t to uint64_t before passing to UniValue
+  * [cde3d35] wallet: Cast size_t to uint64_t before passing to UniValue
+
+  [ James O'Beirne ]
+  * [22d65a0] Refactor leveldbwrapper
+
+  [ Jack Grigg ]
+  * [551f1fe] Refactor Zcash changes to CCoinsViewDB
+
+  [ Pieter Wuille ]
+  * [9025a7f] Encapsulate CLevelDB iterators cleanly
+
+  [ James O'Beirne ]
+  * [e7a6e83] Minor bugfixes
+  * [f48fbb8] Add tests for gettxoutsetinfo, CLevelDBBatch, CLevelDBIterator
+
+  [ Pieter Wuille ]
+  * [562489d] Fix chainstate serialized_size computation
+
+  [ Jack Grigg ]
+  * [c3cb109] Update blockchain.py RPC test for Zcash
+
+  [ Daniel Kraft ]
+  * [a5788ba] trivial: use constants for db keys
+
+  [ Jeff Garzik ]
+  * [532c912] leveldbwrapper: Remove unused .Prev(), .SeekToLast() methods
+  * [525d3f0] leveldbwrapper symbol rename: Remove "Level" from class, etc. names
+  * [8df15e1] leveldbwrapper file rename to dbwrapper.*
+
+  [ Wladimir J. van der Laan ]
+  * [42a292e] dbwrapper: Pass parent CDBWrapper into CDBBatch and CDBIterator
+  * [b5dfb03] dbwrapper: Move `HandleError` to `dbwrapper_private`
+
+  [ Pavel Janík ]
+  * [11398b4] Do not shadow members in dbwrapper
+
+  [ Jack Grigg ]
+  * [6249e02] Update CBlockTreeDB::EraseBatchSync for dbwrapper refactor
+
+  [ Wladimir J. van der Laan ]
+  * [3a49eb1] chain: Add assertion in case of missing records in index db
+  * [ccd4fbe] test: Add more thorough test for dbwrapper iterators
+
+  [ Matt Corallo ]
+  * [904b07d] Add test for dbwrapper iterators with same-prefix keys.
+
+  [ Jack Grigg ]
+  * [94f706b] Fix typo
+
+  [ Wladimir J. van der Laan ]
+  * [4244745] test: Replace remaining sprintf with snprintf
+
+  [ Lauda ]
+  * [f300eae] [Trivial] Grammar and typo correction
+
+  [ Simon ]
+  * [d89f8b3] Use range based for loop
+  * [9da442c] Bump MIT Licence copyright header.
+
+  [ Jack Grigg ]
+  * [e5db169] test: Check return value of snprintf
+
+  [ Jay Graber ]
+  * [3ff767a] Set ban score for expired txs to 0
+
+  [ Daira Hopwood ]
+  * [280c460] Add support for Overwinter v3 transactions to mininode framework.
+  * [0e58baf] Test that receiving an expired transaction does not increase the peer's ban score.
+  * [cd07935] Don't increase banscore if the transaction only just expired.
+
+  [ Jack Grigg ]
+  * [b39e47c] test: Add missing Overwinter fields to mininode's CTransaction
+
+  [ Matt Corallo ]
+  * [ac15903] Add NODE_BLOOM service bit and bump protocol version
+
+  [ Wladimir J. van der Laan ]
+  * [fc434a8] doc: update release-notes and bips.md for BIP111
+
+  [ Patick Strateman ]
+  * [f33f8c1] Move bloom filter filtering logic outside of command "switch" (giant if/else).
+  * [667966f] Add enforcenodebloom option.
+  * [69f56b7] Document both the peerbloomfilters and enforcenodebloom options.
+
+  [ Matt Corallo ]
+  * [99b6f5c] Don't do mempool lookups for "mempool" command without a filter
+
+  [ Jack Grigg ]
+  * [bb491e8] Add RPC test for -enforcenodebloom
+  * [e6ad590] Fix NODE_BLOOM documentation errors
+  * [fcc6364] Move bloom filter filtering logic back into command "switch"
+
+  [ R E Broadley ]
+  * [7609a2d] Allow filterclear messages for enabling TX relay only.
+
+  [ Jack Grigg ]
+  * [245d0fb] Update -enforcenodebloom RPC test with filterclear vs filteradd
+
+  [ Simon ]
+  * [086b91b] Fix test to check for sanitized string from alertnotify.
+
+  [ Jack Grigg ]
+  * [0ab9365] make-release.py: Versioning changes for 1.1.0-rc1.
+  * [29b31c8] make-release.py: Updated manpages for 1.1.0-rc1.
+  * [5b9e199] make-release.py: Updated release notes and changelog for 1.1.0-rc1.
+  * [4c1b185] Set Overwinter protocol version to 170005
+  * [14912d3] When rewinding, reset pindexBestInvalid if it is pointing to a removed block
+  * [8bdebb5] make-release.py: Versioning changes for 1.1.0.
+  * [56f14ce] make-release.py: Updated manpages for 1.1.0.
+  * [1142df6] make-release.py: Updated release notes and changelog for 1.1.0.
+  * [5903378] Overwinter mainnet activation height
+
+  [ Jan Čapek ]
+  * [69952b3] adjust git-dch to dch and git-buildpackage to buildpackage in gbp.conf
+  * [9a56986] generate and add new changelog from 1.0.14 to 1.1.0
+  * [8f66875] remove last part of changelog
+  * [379b4df] remove two more lines from changelog
+  * [6106986] adjust version in changelog
+  * [151241f] adjust bgp.conf and changelog after errors from first bgp buildpackage run
+
+  [ Jiří Navrátil ]
+
+ -- Jiří Navrátil <jiri@navratil.cz>  Fri, 27 Apr 2018 09:19:10 +0000
+
+zcash (1.1.0) unstable; urgency=medium
+
+  [ Jan Čapek ]
+  * [a988ff4] Import initial branch for Debian packaging
+  * [3ea7f28] Changelog update Git-Dch: Ignore
+  * [8bb84e1] Debian: build only with wallet enabled
+  * [568fe86] Changelog update Git-Dch: Ignore
+  * [a8f4094] Changelog update Git-Dch: Ignore
+  * [a129aeb] Debian: remove missing references to bash completions
+  * [37d15df] Changelog update Git-Dch: Ignore
+  * [c06b031] Changelog update
+  * [79a765e] Changelog update
+  * [aef87d7] adjust Maintainer
+  * [4175c65] add curl and cmake to Build-Depends in debian/control
+  * [aeb364a] add changelog
+
+  [ Jack Grigg ]
+  * [31072c8] Scope the ECDSA constant sizes to CPubKey / CKey classes
+
+  [ syd ]
+  * [3edb61c] Remove OSX and Windows files from Makefile + share directory.
+  * [3aca783] Fix libsnark dependency build.
+
+  [ Marius Kjærstad ]
+  * [c9e741b] Changed http:// to https:// on some links
+
+  [ Jack Grigg ]
+  * [3734336] Enable Bash completion for -exportdir
+  * [cbac8cc] Check chainValueZat when checking value pool monitoring
+
+  [ Simon ]
+  * [71fe03c] Fixes #2793. Backport commit f33afd3 to increase dbcache default.
+  * [32564e1] Add documentation about dbcache.
+  * [5af095f] Add note about dbcache to 1.0.15 release notes.
+  * [6b5e4b6] Remove redundant service flag NODE_GETUTXO meant for Bitcoin XT.
+
+  [ Jack Grigg ]
+  * [b7d0270] zkey_import_export: Synchronize mempools before mining
+
+  [ Mark Friedenbach ]
+  * [6f553f6] Explicitly set tx.nVersion for the genesis block and mining tests
+
+  [ Jorge Timón ]
+  * [9b84226] Chainparams: Introduce CreateGenesisBlock() static function
+  * [695f3e5] Chainparams: CTestNetParams and CRegTestParams extend directly from CChainParams
+
+  [ Daniel Kraft ]
+  * [7c166d2] Clean up chainparams some more.
+
+  [ Cory Fields ]
+  * [9137fdb] chainparams: move CCheckpointData into chainparams.h
+  * [d9860d8] chainparams: don't use std namespace
+
+  [ Jack Grigg ]
+  * [3442e8a] Add missing namespace for boost::get
+  * [31a49d5] Add viewing key prefix to regtest parameters
+
+  [ Pavel Vasin ]
+  * [0350f15] remove unused NOBLKS_VERSION_{START,END} constants
+
+  [ Jay Graber ]
+  * [6b8f55b] Add getdeprecationinfo rpc call to return current version and deprecation block height.
+  * [07f5962] Make applicable only on mainnet
+
+  [ Jack Grigg ]
+  * [9aebf32] Network upgrade activation mechanism
+  * [c3457db] Allow changing network upgrade parameters on regtest
+  * [a5da0e5] Test network upgrade logic
+
+  [ Pieter Wuille ]
+  * [9047f22] Add rewind logic to deal with post-fork software updates
+
+  [ Jack Grigg ]
+  * [7ed81e7] Adjust rewind logic to use the network upgrade mechanism
+  * [285d38e] Add Overwinter to upgrade list
+  * [f3ae95d] Add method for fetching the next activation height after a given block height
+  * [7581cc6] Use a boost::optional for nCachedBranchId
+  * [b9c32d6] Change UI/log status message for block rewinding
+  * [30b7b3c] Update quote from ZIP 200
+  * [7dd930c] Use JoinSplitTestingSetup for Boost sighash tests
+
+  [ Simon ]
+  * [1c6c36b] Implementation of Overwinter transaction format ZIP 202.
+
+  [ Jack Grigg ]
+  * [a9cabac] Update SignatureHash tests for transaction format changes
+
+  [ Simon ]
+  * [d10c345] Add test to check malformed v1 transaction against Overwinter tx parser
+
+  [ Ashley Holman ]
+  * [ff20c36] TxMemPool: Change mapTx to a boost::multi_index_container
+
+  [ Pieter Wuille ]
+  * [af5d261] Support -checkmempool=N, which runs checks on average once every N transactions
+
+  [ Alex Morcos ]
+  * [350d73f] Implement helper class for CTxMemPoolEntry constructor
+
+  [ Matt Corallo ]
+  * [0000a9f] Add failing test checking timelocked-txn removal during reorg
+  * [813dfc2] Fix removal of time-locked transactions during reorg
+  * [395e18e] Fix comment in removeForReorg
+  * [60268ad] Make indentation in ActivateBestChainStep readable
+  * [867ec3f] removeForReorg calls once-per-disconnect-> once-per-reorg
+
+  [ Suhas Daftuar ]
+  * [6bce7c7] Track coinbase spends in CTxMemPoolEntry
+  * [abbd82f] Don't call removeForReorg if DisconnectTip fails
+  * [217f09f] Fix removeForReorg to use MedianTimePast
+
+  [ Jack Grigg ]
+  * [518c294] Remove mempool transactions which commit to an unmineable branch ID
+
+  [ Pieter Wuille ]
+  * [e5b0166] Report non-mandatory script failures correctly
+
+  [ 21E14 ]
+  * [08a3fd1] Remove obsolete reference to CValidationState from UpdateCoins.
+
+  [ Jonas Nick ]
+  * [c450918] Reduce unnecessary hashing in signrawtransaction
+
+  [ Pieter Wuille ]
+  * [0598b16] Refactor script validation to observe amounts
+  * [912b532] BIP143: Verification logic
+  * [38814e6] BIP143: Signing logic
+
+  [ Jack Grigg ]
+  * [5169ed6] Remove P2WPKH and P2WSH from signing logic
+
+  [ Jorge Timón ]
+  * [59704a3] Mempool: Use Consensus::CheckTxInputs direclty over main::CheckInputs
+
+  [ Pieter Wuille ]
+  * [745e9fc] Precompute sighashes
+
+  [ Nicolas DORIER ]
+  * [3fae4df] Unit test for sighash caching
+
+  [ Pieter Wuille ]
+  * [18d1036] Rename to PrecomputedTransactionData
+
+  [ Jack Grigg ]
+  * [a257200] Add consensus branch ID parameter to SignatureHash, remove SigVersion parameter
+  * [c558673] Cleanup: Wrap function arguments
+
+  [ Ariel ]
+  * [8b68cb6] add blake2b writer
+  * [a809c56] update SignatureHash according to Overwinter spec
+
+  [ Jack Grigg ]
+  * [b3ac2f3] Regenerate SignatureHash tests
+  * [669d67c] Make number of inputs configurable in validatelargetx test
+  * [b3b5a93] Use v3 transactions with caching for validatelargetx benchmark
+  * [6808add] Implement roll-back limit for reorganisation
+  * [cd57fda] Add rollback limit to block index rewinding
+
+  [ jc ]
+  * [88cdb00] read hashReserved from disk block index
+
+  [ Jack Grigg ]
+  * [d2b9e5a] Check Equihash solution when loading block index
+
+  [ Maxwell Gubler ]
+  * [eeb7f71] Fix syntax examples for z_importwallet and export
+
+  [ Jay Graber ]
+  * [16dc046] Add upgrades field to RPC call getblockchaininfo
+
+  [ Jack Grigg ]
+  * [357e726] Add branch IDs for current and next block to getblockchaininfo
+  * [ba0d524] Check upgrade status in wallet_overwintertx RPC test
+  * [2abebdf] Document that consensus.chaintip != consensus.nextblock just before an upgrade
+
+  [ Simon ]
+  * [564de79] Closes #2964. z_sendmany once again makes v1 tx for taddr to taddr.
+  * [1ce6827] Closes #2954 and #2959.  Fixes Overwinter issues in sighash_tests.
+
+  [ Jack Grigg ]
+  * [a6d0df9] Regenerate sighash tests
+  * [4d4a796] Extend CWallet::GetFilteredNotes to enable filtering on a set of addresses
+  * [711e8e6] Implement z_mergetoaddress for combining UTXOs and notes
+  * [ba2dbaf] Gate z_mergetoaddress as an experimental feature
+  * [d2055ef] Add z_mergetoaddress to release notes
+  * [5a1fe49] wallet_mergetoaddress: Add additional syncs to prevent race conditions
+
+  [ Simon ]
+  * [a73191c] Add field nProtocolVersion to struct NetworkUpgrade.
+  * [65b3fe4] Overwinter peer management and network handshaking.
+  * [c3087a2] Add python qa test overwinter_peer_management.
+
+  [ Jay Graber ]
+  * [d78e76e] Implement transaction expiry for Overwinter
+  * [cf8f5e4] Add -txexpirydelta cli option
+  * [10db024] Add mempool_tx_expiry.py test
+  * [65f89d8] Add expiry to z_mergetoaddress
+  * [3360fba] Change rpc_tests to 21
+
+  [ Jack Grigg ]
+  * [9125785] make-release.py: Versioning changes for 1.0.15-rc1.
+  * [49c88e2] make-release.py: Updated manpages for 1.0.15-rc1.
+  * [6a6e9b4] make-release.py: Updated release notes and changelog for 1.0.15-rc1.
+  * [3b7d670] Use block hash comparison for consistency check when loading block index
+  * [c181f14] Overwinter release notes and testnet activation height
+  * [17a54ad] make-release.py: Versioning changes for 1.0.15.
+  * [c7c0b2a] make-release.py: Updated manpages for 1.0.15.
+  * [f4416bc] make-release.py: Updated release notes and changelog for 1.0.15.
+
+  [ Daira Hopwood ]
+  * [abe7769] Squashed commit of the following:
+
+  [ Jason Davies ]
+  * [f218f05] Fix typo in comment: should link to issue #1359.
+
+  [ rofl0r ]
+  * [290482a] fix build error due to usage of obsolete boost_system-mt
+  * [d476b33] remove -mt suffix from boost libraries built by depends
+
+  [ Jonathan "Duke" Leto ]
+  * [b6a4006] Fix references to Bitcoin in RPC tests readme
+  * [92d4773] This library seems to not be used at all and all comments mentioning it are ghosts
+  * [21b3708] Update awkward wording about blocks as per @daira
+  * [fefcd08] Regtest mining does have a founders reward, a single address t2FwcEhFdNXuFMv1tcYwaBJtYVtMj8b1uTg
+  * [b053aa3] Fix outdated comment about starting balance of nodes
+
+  [ Jack Grigg ]
+  * [cc2767b] Add environment variable for setting ./configure flags in zcutil/build.sh
+  * [f3c881f] Add configure flags for enabling ASan/UBSan and TSan
+
+  [ Simon ]
+  * [6005acd] Code clean up. Remove use of X macro.
+
+  [ Daira Hopwood ]
+  * [57b0482] pyflakes cleanups to RPC tests after Overwinter PRs.
+
+  [ kozyilmaz ]
+  * [c9a1a1f] Fix test/gtest bugs caught by latest macOS clang
+
+  [ Brad Miller ]
+  * [854b1a5] Clean up
+
+  [ Simon ]
+  * [9c129c8] Remove local function wait_and_assert_operationid_status which is now defined in the test framework for shared usage.
+  * [38793a4] Enable mempool logging in tx expiry QA test.
+  * [0c7b553] Closes #3084. Log txid when removing expired txs from mempool.
+  * [daa1817] Add qa test for cache invalidation bug found in v1.0.0 to v1.0.3.
+
+  [ Jack Grigg ]
+  * [6decaf7] Split declaration and definition of SPROUT_BRANCH_ID constant
+  * [9bbf62c] Add link to Overwinter info page
+  * [75075c6] cleanup: Ensure code is pyflakes-clean for CI
+
+  [ Simon ]
+  * [8bd9be1] Update boost to 1.66.0
+
+  [ Jack Grigg ]
+  * [c4dfb4f] Revert "remove -mt suffix from boost libraries built by depends"
+  * [5a1a8a3] Use correct Boost::System linker flag for libzcash
+  * [fba32b5] depends: Remove -mt suffix from Boost libraries
+  * [ee30c65] snark: Remove -mt suffix from Boost library
+
+  [ Simon ]
+  * [7c5a9b2] Closes #3110.  Ensure user can see error message about absurdly high fees.
+  * [0b99255] Part of #2966, extending Sprout tests to other epochs.
+
+  [ Charlie O'Keefe ]
+  * [406443d] Add filename and sha256 hash for windows rust package
+
+  [ Jack Grigg ]
+  * [d116c30] depends: Explicitly download and vendor Rust dependencies
+
+  [ Simon ]
+  * [58c68f9] Update boost package URL to match official download url on boost.org
+  * [4d089f5] Closes #2910. Add z_listunspent RPC call.
+
+  [ Jack Grigg ]
+  * [f68c708] test: Move wait_and_assert_operationid_status debug output before asserts
+  * [b29e6a7] Ignore -mempooltxinputlimit once Overwinter activates
+
+  [ Simon ]
+  * [0c7f67c] Upgrade OpenSSL to 1.1.0h
+
+  [ Jack Grigg ]
+  * [72f9e56] Make Rust compilation mandatory
+  * [3fef5a6] Test calling z_mergetoaddress to merge notes while a note merge is ongoing
+
+  [ Brad Miller ]
+  * [50f755b] Implement note locking for z_mergetoaddress
+
+  [ Jack Grigg ]
+  * [ac129c3] depends: Fix regex bugs in cargo-checksum.sh
+
+  [ Jonathan "Duke" Leto ]
+  * [acb6c3e] Return JoinSplit and JoinSplitOutput indexes in z_listreceivedbyaddress
+  * [0652567] Add tests for new JoinSplit keys returned by z_listreceivedbyaddress
+
+  [ Jack Grigg ]
+  * [b621d86] Add RPC test of RewindBlockIndex
+  * [a46a786] When rewinding, remove insufficiently-validated blocks
+  * [fede1cb] Notify users about auto-senescence via -alertnotify
+  * [7d1c544] Adjust deprecation message to work in both UI and -alertnotify
+  * [c1116e6] Fix z_importviewingkey startHeight parameter
+  * [f85ecc1] Don't require RELRO and BIND_NOW for Darwin
+  * [271b729] Only set multicore flags if OpenMP is available
+  * [2fd0649] Optimise serialization of MerklePath, avoiding ambiguity of std::vector<bool>
+  * [c8968b7] Use uint64_t instead of size_t for serialized indices into tx.vjoinsplit
+  * [c2efab1] Move explicit instantiation of IncrementalMerkleTree::emptyroots into header
+  * [6001a00] libsnark: Don't set -static on Darwin
+  * [62ffd57] Set PLATFORM flag when compiling libsnark
+  * [dc14410] Add base case to CurrentEpoch()
+  * [b11637a] Cast ZCIncrementalMerkleTree::size() to uint64_t before passing to UniValue
+  * [29f4bbe] rpcwallet.cpp: Cast size_t to uint64_t before passing to UniValue
+  * [cde3d35] wallet: Cast size_t to uint64_t before passing to UniValue
+
+  [ James O'Beirne ]
+  * [22d65a0] Refactor leveldbwrapper
+
+  [ Jack Grigg ]
+  * [551f1fe] Refactor Zcash changes to CCoinsViewDB
+
+  [ Pieter Wuille ]
+  * [9025a7f] Encapsulate CLevelDB iterators cleanly
+
+  [ James O'Beirne ]
+  * [e7a6e83] Minor bugfixes
+  * [f48fbb8] Add tests for gettxoutsetinfo, CLevelDBBatch, CLevelDBIterator
+
+  [ Pieter Wuille ]
+  * [562489d] Fix chainstate serialized_size computation
+
+  [ Jack Grigg ]
+  * [c3cb109] Update blockchain.py RPC test for Zcash
+
+  [ Daniel Kraft ]
+  * [a5788ba] trivial: use constants for db keys
+
+  [ Jeff Garzik ]
+  * [532c912] leveldbwrapper: Remove unused .Prev(), .SeekToLast() methods
+  * [525d3f0] leveldbwrapper symbol rename: Remove "Level" from class, etc. names
+  * [8df15e1] leveldbwrapper file rename to dbwrapper.*
+
+  [ Wladimir J. van der Laan ]
+  * [42a292e] dbwrapper: Pass parent CDBWrapper into CDBBatch and CDBIterator
+  * [b5dfb03] dbwrapper: Move `HandleError` to `dbwrapper_private`
+
+  [ Pavel Janík ]
+  * [11398b4] Do not shadow members in dbwrapper
+
+  [ Jack Grigg ]
+  * [6249e02] Update CBlockTreeDB::EraseBatchSync for dbwrapper refactor
+
+  [ Wladimir J. van der Laan ]
+  * [3a49eb1] chain: Add assertion in case of missing records in index db
+  * [ccd4fbe] test: Add more thorough test for dbwrapper iterators
+
+  [ Matt Corallo ]
+  * [904b07d] Add test for dbwrapper iterators with same-prefix keys.
+
+  [ Jack Grigg ]
+  * [94f706b] Fix typo
+
+  [ Wladimir J. van der Laan ]
+  * [4244745] test: Replace remaining sprintf with snprintf
+
+  [ Lauda ]
+  * [f300eae] [Trivial] Grammar and typo correction
+
+  [ Simon ]
+  * [d89f8b3] Use range based for loop
+  * [9da442c] Bump MIT Licence copyright header.
+
+  [ Jack Grigg ]
+  * [e5db169] test: Check return value of snprintf
+
+  [ Jay Graber ]
+  * [3ff767a] Set ban score for expired txs to 0
+
+  [ Daira Hopwood ]
+  * [280c460] Add support for Overwinter v3 transactions to mininode framework.
+  * [0e58baf] Test that receiving an expired transaction does not increase the peer's ban score.
+  * [cd07935] Don't increase banscore if the transaction only just expired.
+
+  [ Jack Grigg ]
+  * [b39e47c] test: Add missing Overwinter fields to mininode's CTransaction
+
+  [ Matt Corallo ]
+  * [ac15903] Add NODE_BLOOM service bit and bump protocol version
+
+  [ Wladimir J. van der Laan ]
+  * [fc434a8] doc: update release-notes and bips.md for BIP111
+
+  [ Patick Strateman ]
+  * [f33f8c1] Move bloom filter filtering logic outside of command "switch" (giant if/else).
+  * [667966f] Add enforcenodebloom option.
+  * [69f56b7] Document both the peerbloomfilters and enforcenodebloom options.
+
+  [ Matt Corallo ]
+  * [99b6f5c] Don't do mempool lookups for "mempool" command without a filter
+
+  [ Jack Grigg ]
+  * [bb491e8] Add RPC test for -enforcenodebloom
+  * [e6ad590] Fix NODE_BLOOM documentation errors
+  * [fcc6364] Move bloom filter filtering logic back into command "switch"
+
+  [ R E Broadley ]
+  * [7609a2d] Allow filterclear messages for enabling TX relay only.
+
+  [ Jack Grigg ]
+  * [245d0fb] Update -enforcenodebloom RPC test with filterclear vs filteradd
+
+  [ Simon ]
+  * [086b91b] Fix test to check for sanitized string from alertnotify.
+
+  [ Jack Grigg ]
+  * [0ab9365] make-release.py: Versioning changes for 1.1.0-rc1.
+  * [29b31c8] make-release.py: Updated manpages for 1.1.0-rc1.
+  * [5b9e199] make-release.py: Updated release notes and changelog for 1.1.0-rc1.
+  * [4c1b185] Set Overwinter protocol version to 170005
+  * [14912d3] When rewinding, reset pindexBestInvalid if it is pointing to a removed block
+  * [8bdebb5] make-release.py: Versioning changes for 1.1.0.
+  * [56f14ce] make-release.py: Updated manpages for 1.1.0.
+  * [1142df6] make-release.py: Updated release notes and changelog for 1.1.0.
+  * [5903378] Overwinter mainnet activation height
+
+ -- Jiří Navrátil <jiri@navratil.cz>  Fri, 27 Apr 2018 08:08:40 +0000
