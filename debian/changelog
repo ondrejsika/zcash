@@ -1,3 +1,9 @@
+zcash (1.1.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Michal Čihař <michal.cihar@braiins.cz>  Wed, 20 Jun 2018 14:46:09 +0000
+
 zcash (1.1.0-1) unstable; urgency=medium
 
   [ Jan Čapek ]
