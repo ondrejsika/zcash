@@ -1,3 +1,9 @@
+zcash (1.1.1-1.jessie.1) unstable; urgency=medium
+
+  * Rebuilt for jessie.
+
+ -- Michal Čihař <michal.cihar@braiins.cz>  Wed, 20 Jun 2018 18:24:52 +0000
+
 zcash (1.1.1-1) unstable; urgency=medium
 
   * New upstream release.
