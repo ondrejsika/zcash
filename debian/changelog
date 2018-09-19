@@ -1,3 +1,9 @@
+zcash (2.0.0-1.jessie.1) UNRELEASED; urgency=medium
+
+  * Rebuilt for jessie.
+
+ -- Jan Čapek <jan.capek@braiins.cz>  Wed, 19 Sep 2018 15:01:07 +0000
+
 zcash (2.0.0-1) unstable; urgency=medium
 
   [ Jan Čapek ]
