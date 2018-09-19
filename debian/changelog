@@ -1,3 +1,390 @@
+zcash (2.0.0-1) unstable; urgency=medium
+
+  [ Jan Čapek ]
+  * [a988ff4] Import initial branch for Debian packaging
+  * [3ea7f28] Changelog update Git-Dch: Ignore
+  * [8bb84e1] Debian: build only with wallet enabled
+  * [568fe86] Changelog update Git-Dch: Ignore
+  * [a8f4094] Changelog update Git-Dch: Ignore
+  * [a129aeb] Debian: remove missing references to bash completions
+  * [37d15df] Changelog update Git-Dch: Ignore
+  * [c06b031] Changelog update
+  * [79a765e] Changelog update
+  * [aef87d7] adjust Maintainer
+  * [4175c65] add curl and cmake to Build-Depends in debian/control
+  * [aeb364a] add changelog
+
+  [ Pejvan ]
+  * [295ff63] Update README.md
+
+  [ Eirik Ogilvie-Wigley ]
+  * [a81b36d] Add more options when asserting in RPC tests
+
+  [ Jack Grigg ]
+  * [ef1678b] Add some more checkpoints, up to the 1.1.0 release
+
+  [ Jonathan "Duke" Leto ]
+  * [30bf78c] Clarify help that signmessage only works on taddrs
+
+  [ Wladimir J. van der Laan ]
+  * [29aaf13] Make max tip age an option instead of chainparam
+
+  [ Kaz Wesley ]
+  * [02eedee] IsInitialBlockDownload: usually avoid locking
+
+  [ Gregory Maxwell ]
+  * [e41632c] IBD check uses minimumchain work instead of checkpoints.
+  * [f04a90a] IsInitialBlockDownload no longer uses header-only timestamps.
+
+  [ Alex Morcos ]
+  * [bbff863] Output line to debug.log when IsInitialBlockDownload latches to false
+
+  [ Eirik Ogilvie-Wigley ]
+  * [3182b4a] Add tests for sapling anchors
+
+  [ Simon ]
+  * [f984008] Part of #3277. Add comment about deprecated txdb prefixes.
+
+  [ Larry Ruane ]
+  * [fff0316] (rpc-test) accurately account for fee without rounding error
+
+  [ Jack Grigg ]
+  * [a6bbb26] Replace boost::array with std::array
+
+  [ Paige Peterson ]
+  * [53edd2b] include note about volunteers in CoC
+
+  [ Jay Graber ]
+  * [11acfe6] Add Sapling key classes to wallet, with new librustzcash APIs
+  * [84e3a22]  Change librustzcash dependency hash to work for new Sapling classes
+  * [52d81ff] Update librustzcash dependency, address comments
+  * [521a6f1] Minimal sapling key test
+  * [dd09940] Fix default_address()
+
+  [ Eirik Ogilvie-Wigley ]
+  * [25c13ef] Add hashFinalSaplingRoot to getblocktemplate
+
+  [ Jay Graber ]
+  * [0da9aac] s/SaplingInViewingKey/SaplingIncomingViewingKey
+  * [87c9994] Make diversifier functions return option
+
+  [ Eirik Ogilvie-Wigley ]
+  * [c61ed9a] Fix parsing parameters in getnetworksolps
+
+  [ Matthew King ]
+  * [d28d3d2] Use portable #! in python scripts (/usr/bin/env)
+  * [12d3277] Favour python over python2 as per PR #7723
+
+  [ Jack Grigg ]
+  * [c7e6475] Add MacOS support to no-dot-so test
+  * [4fb3d05] Whitespace cleanup
+  * [7e45636] chainparams: Add Sapling Bech32 HRPs
+  * [6b759fb] ConvertBits() - convert from one power-of-2 number base to another.
+
+  [ Pieter Wuille ]
+  * [ac70f76] Generalize ConvertBits
+  * [6a2cc8d] Simplify Base32 and Base64 conversions
+
+  [ Jack Grigg ]
+  * [c8511df] Fix bech32::Encode() error handling
+  * [bec3e62] Implement encoding and decoding of Sapling keys and addresses
+  * [5e38c24] Add Mach-O 64-bit detection to security-check.py
+  * [2802e32] Fix cached_witnesses_empty_chain test failure on MacOS
+
+  [ Simon ]
+  * [10a7d55] Remove now redundant Rust call to librustzcash_xor.
+
+  [ Jack Grigg ]
+  * [341a22a] Skip ELF-only sec-hard checks on non-ELF binaries
+
+  [ Daira Hopwood ]
+  * [3e45258] Update code_of_conduct.md
+
+  [ Ariel Gabizon ]
+  * [e1a3461] Improve/Fix variable names
+
+  [ Jack Grigg ]
+  * [c74ab33] Remove config option -disabledeprecation
+  * [74c2f88] Add release notes for -disabledeprecation removal
+  * [dd7417c] Add comment about size calculations for converted serialized keys
+  * [f590939] Add examples of ConvertBits transformation
+  * [69aa0d8] Use CChainParams::Bech32HRP() in zs_address_test
+
+  [ Simon ]
+  * [36e2e7c] Add SaplingNote class and test_sapling_note unit test.
+  * [d17f8d1] Refactor and replace factory method random() with constructor.
+  * [268e5df] Return optional for Sapling commitments and nullifiers.
+
+  [ Jay Graber ]
+  * [052d640] Add json test vectors for Sapling key components.
+
+  [ Sean Bowe ]
+  * [9e8e121] Update librustzcash
+  * [9e1c2c4] Implementation of Sapling in-band secret distribution.
+  * [90073ae] Swap types in OutputDescription to use new NoteEncryption interfaces.
+  * [c03e226] Prevent nonce reuse in Sapling note encryption API.
+
+  [ Jack Grigg ]
+  * [3af4633] Add hashFinalSaplingRoot to getblockheader and getblock output
+
+  [ Sean Bowe ]
+  * [4e1f2da] Add get_esk() function to Sapling note encryption.
+
+  [ Eirik Ogilvie-Wigley ]
+  * [115b26c] Add BOOST_TEST_CONTEXT to distinguish sprout v. sapling
+  * [762ee0e] Rename typename
+
+  [ Duke Leto ]
+  * [e5aa9f6] Fix absurd fee bug reported in #3281, with tests
+
+  [ Simon ]
+  * [e56117f] Closes #3328. Send alert to put non-Overwinter nodes into safe mode.
+  * [a4ff089] Fix pyflakes error in test zkey_import_export.
+  * [5cbbb7e] make-release.py: Versioning changes for 1.1.2-rc1.
+  * [5121fad] make-release.py: Updated manpages for 1.1.2-rc1.
+  * [3ef8f7a] make-release.py: Updated release notes and changelog for 1.1.2-rc1.
+
+  [ Richard Littauer ]
+  * [5ffb246] docs(LICENSE): update license year to 2018
+
+  [ Simon ]
+  * [8fc7372] make-release.py: Versioning changes for 1.1.2.
+  * [7163f00] make-release.py: Updated manpages for 1.1.2.
+  * [720b8ac] make-release.py: Updated release notes and changelog for 1.1.2.
+
+  [ kozyilmaz ]
+  * [eda9f87] Add -Wl,-pie linker option for macOS and use it instead of -pie
+
+  [ Larry Ruane ]
+  * [c872c1d] Disable libsnark debug logging in Boost tests
+
+  [ Jay Graber ]
+  * [efb7662] Add Sapling Add/Have/Get to keystore
+  * [f4207d0] Add SaplingIncomingViewingKeys map, SaplingFullViewingKey methods
+  * [f82a864] Add StoreAndRetrieveSaplingSpendingKey test
+  * [8e91ebf] Change default_address to return SaplingPaymentAddr and not boost::optional
+  * [2173767] Add crypted keystore sapling add key
+
+  [ Dimitris Apostolou ]
+  * [ccf9106] Fix typos
+
+  [ Jack Grigg ]
+  * [bea8791] Add Sapling support to z_validateaddress
+
+  [ Sean Bowe ]
+  * [7478876] Minor edits
+
+  [ Simon ]
+  * [34bf166] Add encryption of SaplingNotePlaintext and SaplingOutgoingPlaintext classes.
+
+  [ Jack Grigg ]
+  * [26948eb] Update payment-api.md with type field of z_validateaddress
+
+  [ Jay Graber ]
+  * [db9f669] Discard sk if ivk == 0
+
+  [ Ariel Gabizon ]
+  * [589479f] Extend Joinsplit tests to Groth
+
+  [ Duke Leto ]
+  * [75bb5f9] Update comment as per @arielgabizon
+  * [4b8c52c] Improve error message
+
+  [ Eirik Ogilvie-Wigley ]
+  * [0646f74] Add change indicator for notes
+  * [62d707d] Fix test broken by change indicator
+
+  [ Sean Bowe ]
+  * [f23e783] Decryption and tests of note/outgoing encryption.
+
+  [ Larry Ruane ]
+  * [66dfcc1] add extra help how to enable experimental features
+
+  [ Pejvan ]
+  * [642f368] Update README.md
+
+  [ Simon ]
+  * [0b6eeac] Update and fix per review comments, the test for absurd fee.
+  * [687bd96] Minor update to address nits in review.
+
+  [ Jonas Schnelli ]
+  * [34aca1b] [RPC, Wallet] Move RPC dispatch table registration to wallet/ code
+
+  [ Daniel Cousens ]
+  * [4519a76] move rpc* to rpc/
+  * [4b18420] rpc: update inline comments to refer to new file paths
+
+  [ Wladimir J. van der Laan ]
+  * [a9496b0] rpc: Register calls where they are defined
+
+  [ Larry Ruane ]
+  * [cb3a815] Add call to sync_all() after (z_sendmany, wait)
+
+  [ Simon ]
+  * [7b913c3] Implement Sapling note decryption using full viewing key.
+  * [e739ca2] Rename AttemptSaplingEncDecryptionUsingFullViewingKey and use function overloading.
+
+  [ Jack Grigg ]
+  * [66a519f] Alter SaplingNote::nullifier() to take a SaplingFullViewingKey
+  * [70a7535] Expose note position in IncrementalMerkleWitness
+
+  [ Charlie OKeefe ]
+  * [eb20680] Remove extra slash from lockfile path
+
+  [ Jack Grigg ]
+  * [e691e21] TransactionBuilder with support for creating Sapling-only transactions
+
+  [ Eirik Ogilvie-Wigley ]
+  * [005f3ad] Rename note data to include sprout
+  * [49695a9] Remove redundant curly braces
+  * [3c868d2] Consolidate for loops
+  * [00ed923] Add out point for sapling note data
+  * [be43b74] Add sapling note data and map
+  * [9d804cc] Decrement sapling note witnesses
+  * [403b9b4] Clear sapling witness cache
+  * [b538024] Extract method for copying previous witnesses
+  * [f6d0d5e] Extract methods for incrementing witnesses
+  * [4a0bc60] Extract method for incrementing witness heights
+  * [f86ee1c] Pass sapling merkle tree when incrementing witnesses
+  * [45de2ed] Increment sapling note witnesses
+  * [8e8279e] Rename sprout specific methods
+  * [29523dc] Remove extra indentation
+  * [e6b0a8b] Add getter and setter for sapling note data and update tests
+  * [3a5f66c] Add parameter for version in GetValidReceive
+
+  [ Simon ]
+  * [d9fe33b] Only check for a valid Sapling anchor after Sapling activation.
+  * [2f0b2a2] Clean up for rebase: rename mapNoteData to mapSproutNoteData.
+
+  [ Larry Ruane ]
+  * [772f87a] don't ban peers when loading pre-overwinter blocks
+
+  [ Jack Grigg ]
+  * [e5dc522] TransactionBuilder: Check that all anchors in a transaction are identical
+  * [25bb05d] Formatting
+  * [3fd0a26] test: Move ECC_Start() call into src/gtest/main.cpp
+
+  [ mdr0id ]
+  * [e18f25e] Fix minor references to auto-senescence in code
+
+  [ Jay Graber ]
+  * [2afc8eb] Add Sapling support to z_exportkey
+  * [dd4c8a3] Add Sapling support to z_importkey
+  * [8dd1dbc] Add Sapling to rpc_wallet_z_importexport test
+  * [501de64] Refactor into visitors and throw errors for invalid key or address.
+  * [76277ad] Take expiryheight as param to createrawtransaction
+
+  [ Simon ]
+  * [87d55e1] Clean up help messages for RPC createrawtransaction.
+
+  [ Jack Grigg ]
+  * [3466b46] TransactionBuilder: Add support for transparent inputs and outputs
+  * [45c0d1e] TransactionBuilder: Add change output to transaction
+  * [a8dd4b0] TransactionBuilder: Make fee configurable
+  * [54a868c] Rename xsk to expsk
+  * [4715b31] Implement CKeyStore::GetSaplingPaymentAddresses()
+  * [281b51e] Raise the 90-character limit on Bech32 encodings
+  * [eec85c4] Add Sapling support to z_getnewaddress and z_listaddresses
+  * [3f4ad59] Fix block hash for checkpoint at height 270000
+
+  [ Simon ]
+  * [f01c11b] Add tests for expiryheight parameter of RPC createrawtransaction.
+
+  [ Sean Bowe ]
+  * [b7b088c] Update librustzcash and sapling-crypto.
+  * [04ed758] Fix bug in return value.
+  * [291895f] Ensure sum of valueBalance and all vpub_new's does not exceed MAX_MONEY inside of CheckTransactionWithoutProofVerification.
+  * [3d75e8b] Move `extern params` to beginning of `test_checktransaction`.
+
+  [ Jack Grigg ]
+  * [fbd029d] Formatting
+
+  [ Sean Bowe ]
+  * [a310f6c] Relocate ECC_Start() to avoid test failures.
+
+  [ Jack Grigg ]
+  * [d75e69d] test: Deduplicate logic in wallet_addresses RPC test
+  * [4fab49e] test: Another assert in wallet_zkeys_tests.store_and_load_sapling_zkeys
+
+  [ Eirik Ogilvie-Wigley ]
+  * [4fc309f] Rename Merkle Trees to include sprout or sapling
+  * [8ea8ef9] Rename Witnesses to include sprout or sapling
+  * [7d379f1] Rename test objects to include sprout or sapling
+
+  [ Jack Grigg ]
+  * [4aabeeb] test: Fix permissions of wallet_addresses
+  * [40dc060] test: Update rpc_wallet_z_importexport to account for Sapling changes
+
+  [ Sean Bowe ]
+  * [262d21b] Don't call ECC_Start/ECC_Stop outside the test harness.
+  * [80bd573] Make changes to gtest ECC behavior suggested by @str4d.
+  * [d9ef8f6] Check the hash of the (Sapling+) zk-SNARK parameters during initialization.
+
+  [ Daira Hopwood ]
+  * [66856b2] Support testnet rollback.
+
+  [ Jay Graber ]
+  * [55f2889] Add Sapling have/get sk crypter overrides
+  * [85beb9c] Add Sapling keys to CCryptoKeyStore::EncryptKeys
+
+  [ Jack Grigg ]
+  * [adf2ead] Rename DecryptSpendingKey -> DecryptSproutSpendingKey
+  * [e8a949c] Rename CryptedSpendingKeyMap -> CryptedSproutSpendingKeyMap
+  * [0adba67] Add Sapling decryption check to CCryptoKeyStore::Unlock()
+  * [4a89221] Check for unencrypted Sapling keys in CCryptoKeyStore::SetCrypted()
+  * [9c9258c] Remove outdated comment
+  * [bc6344b] Add CWallet::AddCryptedSaplingSpendingKey() hook
+  * [5175a7f] Pass SaplingPaymentAddress to store through the CKeyStore
+  * [93fcf89] Rename SpendingKeyMap -> SproutSpendingKeyMap
+  * [74f5b01] Rename Serialized*Size -> SerializedSprout*Size
+  * [4c77517] Rename *ViewingKey* -> *SproutViewingKey*
+  * [f84cf5f] Formatting nits
+  * [25d5e80] Rename *SpendingKey -> *SproutSpendingKey
+
+  [ Sean Bowe ]
+  * [198dfd3] Switch to use the official Sapling parameters.
+
+  [ Cory Fields ]
+  * [6a753e4] crypter: shuffle Makefile so that crypto can be used by the wallet
+
+  [ Jonas Schnelli ]
+  * [4922d1c] Fix test_bitcoin circular dependency issue
+
+  [ Jack Grigg ]
+  * [0ecdd0f] chainparams: Add BIP 44 coin type (as registered in SLIP 44)
+  * [e188723] Upgrade Rust to 1.28.0 stable
+  * [d0372cf] Adjust Makefile so that common can be used by the wallet
+
+  [ Eirik Ogilvie-Wigley ]
+  * [7929851] Only include the change field if we have a spending key
+  * [4e1e915] Fix assertion and comment
+
+  [ Jack Grigg ]
+  * [1375189] Move RewindBlockIndex log message inside rewindLength check
+
+  [ Sean Bowe ]
+  * [3e9aec2] make-release.py: Versioning changes for 2.0.0-rc1.
+  * [27f678b] make-release.py: Updated manpages for 2.0.0-rc1.
+  * [c2f6611] make-release.py: Updated release notes and changelog for 2.0.0-rc1.
+
+  [ Jack Grigg ]
+  * [e7ca4eb] test: gtest for Sapling encoding and decoding
+  * [dfcf33f] test: Use regtest in key_tests/zs_address_test
+  * [554e00e] Disable Sapling features on mainnet
+
+  [ Sean Bowe ]
+  * [f791ce0] Always write the empty root down as the best root, since we may roll back.
+  * [955b328] Sapling mainnet activation height
+
+  [ Simon ]
+  * [94f7201] make-release.py: Versioning changes for 2.0.0.
+  * [84b13ae] make-release.py: Updated manpages for 2.0.0.
+  * [2f4735b] make-release.py: Updated release notes and changelog for 2.0.0.
+
+  [ Jan Čapek ]
+
+ -- Jan Čapek <jan.capek@braiins.cz>  Wed, 19 Sep 2018 14:27:31 +0000
+
 zcash (1.0.14-1) unstable; urgency=low
 
   [ Jan Čapek ]
