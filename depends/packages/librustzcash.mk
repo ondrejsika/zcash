@@ -3,12 +3,18 @@ $(package)_version=0.1
 $(package)_download_path=https://github.com/zcash/$(package)/archive/
 $(package)_file_name=$(package)-$($(package)_git_commit).tar.gz
 $(package)_download_file=$($(package)_git_commit).tar.gz
-$(package)_sha256_hash=a5760a90d4a1045c8944204f29fa2a3cf2f800afee400f88bf89bbfe2cce1279
-$(package)_git_commit=91348647a86201a9482ad4ad68398152dc3d635e
-$(package)_dependencies=rust
+$(package)_sha256_hash=4d022b66e554efbf6db01b2a282e312e8a1b492c4680299ae8c26629882eb46b
+$(package)_git_commit=f5d2afb4eabac29b1b1cc860d66e45a5b48b4f88
+$(package)_dependencies=rust $(rust_crates)
+$(package)_patches=cargo.config
+
+define $(package)_preprocess_cmds
+  mkdir .cargo && \
+  cat $($(package)_patch_dir)/cargo.config | sed 's|CRATE_REGISTRY|$(host_prefix)/$(CRATE_REGISTRY)|' > .cargo/config
+endef
 
 define $(package)_build_cmds
-  cargo build --release
+  cargo build --frozen --release
 endef
 
 define $(package)_stage_cmds
